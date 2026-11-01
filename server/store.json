@@ -1,0 +1,71 @@
+{
+  "options": [
+    {
+      "id": "opt-1",
+      "rawName": "دوائي الذكي",
+      "title": "دوائي الذكي",
+      "subtitle": "",
+      "votes": 0,
+      "enabled": true,
+      "order": 0
+    },
+    {
+      "id": "opt-2",
+      "rawName": "RxCompass Ai | بوصلة الصرف الذكي",
+      "title": "RxCompass Ai",
+      "subtitle": "بوصلة الصرف الذكي",
+      "votes": 0,
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "id": "opt-3",
+      "rawName": "جسور",
+      "title": "جسور",
+      "subtitle": "",
+      "votes": 0,
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "id": "opt-4",
+      "rawName": "MedCompanion",
+      "title": "MedCompanion",
+      "subtitle": "",
+      "votes": 0,
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "id": "opt-5",
+      "rawName": "PharmGuard AI",
+      "title": "PharmGuard AI",
+      "subtitle": "",
+      "votes": 0,
+      "enabled": true,
+      "order": 4
+    }
+  ],
+  "settings": {
+    "votingState": "open",
+    "screenMode": "idle",
+    "maxVotesPerPerson": 1,
+    "allowSameOptionMultiple": false,
+    "showCounts": true,
+    "showPercentages": true,
+    "showTopN": 0,
+    "autoCycle": false,
+    "autoCycleInterval": 15,
+    "revealMode": false,
+    "revealedCount": 0,
+    "soundEnabled": false,
+    "testMode": false,
+    "eventTitleArabic": "ذكاء يُبتكر",
+    "eventSubtitleEnglish": "AI INNOVATION COMPETITION",
+    "votingUrl": "",
+    "adminPin": "2026"
+  },
+  "voters": {},
+  "auditLog": [],
+  "voteHistory": []
+}

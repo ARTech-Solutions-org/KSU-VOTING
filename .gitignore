@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Production build artifacts (built by Vercel or locally)
+dist/
+
+# Environment variables (NEVER commit secrets to public repositories)
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
