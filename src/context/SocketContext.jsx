@@ -191,6 +191,63 @@ export function SocketProvider({ children }) {
     [socket, socketConnected]
   );
 
+  // Admin Verify PIN (supports both Socket.io and REST fallback for Vercel)
+  const verifyAdminPin = useCallback(
+    async (pin) => {
+      if (socket && socketConnected) {
+        return new Promise((resolve) => {
+          socket.emit('admin:verify', { pin }, (res) => {
+            resolve(res || { success: false, error: 'رمز الدخول غير صحيح' });
+          });
+        });
+      }
+
+      try {
+        const res = await fetch('/api/admin/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin }),
+        });
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        return { success: false, error: 'تعذر التحقق، يرجى فحص الاتصال' };
+      }
+    },
+    [socket, socketConnected]
+  );
+
+  // Admin Action (supports both Socket.io and REST fallback for Vercel)
+  const executeAdminAction = useCallback(
+    async (action, payload = {}, pin) => {
+      const eventName = action.startsWith('admin:') ? action : `admin:${action}`;
+
+      if (socket && socketConnected) {
+        return new Promise((resolve) => {
+          socket.emit(eventName, { ...payload, pin }, (res) => {
+            resolve(res || { success: true });
+          });
+        });
+      }
+
+      try {
+        const res = await fetch('/api/admin/action', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: eventName, payload, pin }),
+        });
+        const data = await res.json();
+        if (data && data.success && data.state) {
+          setState(data.state);
+        }
+        return data;
+      } catch (err) {
+        return { success: false, error: 'تعذر تنفيذ الإجراء، يرجى المحاولة ثانية' };
+      }
+    },
+    [socket, socketConnected]
+  );
+
   return (
     <SocketContext.Provider
       value={{
@@ -200,6 +257,8 @@ export function SocketProvider({ children }) {
         voterStatus,
         latestVoteEvent,
         submitVote,
+        verifyAdminPin,
+        executeAdminAction,
       }}
     >
       {children}

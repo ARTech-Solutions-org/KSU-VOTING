@@ -31,10 +31,11 @@ import {
 } from 'lucide-react';
 
 export default function AdminModal({ onClose }) {
-  const { state, socket } = useSocket();
+  const { state, socket, verifyAdminPin, executeAdminAction } = useSocket();
   const [pinInput, setPinInput] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinError, setPinError] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'options' | 'settings' | 'reveal' | 'audit'
 
   // Option Editor State
@@ -50,24 +51,33 @@ export default function AdminModal({ onClose }) {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [resetConfirmText, setResetConfirmText] = useState('');
 
-  // Handle PIN Login
-  const handleLogin = (e) => {
+  // Handle PIN Login (supports both Socket and REST fallback for Vercel)
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!socket) return;
-    socket.emit('admin:verify', { pin: pinInput }, (res) => {
+    const trimmed = pinInput.trim();
+    if (!trimmed || isVerifying) return;
+    setIsVerifying(true);
+    setPinError('');
+
+    try {
+      const res = await verifyAdminPin(trimmed);
       if (res && res.success) {
         setIsAuthenticated(true);
         setPinError('');
       } else {
-        setPinError('رمز الدخول غير صحيح');
+        setPinError(res?.error || 'رمز الدخول غير صحيح');
       }
-    });
+    } catch (err) {
+      setPinError('حدث خطأ في الاتصال، يرجى المحاولة ثانية');
+    } finally {
+      setIsVerifying(false);
+    }
   };
 
-  // Helper for admin socket emits
+  // Helper for admin actions (Socket or REST fallback)
   const emitAdmin = (event, payload = {}) => {
-    if (!socket || !isAuthenticated) return;
-    socket.emit(event, { ...payload, pin: pinInput });
+    if (!isAuthenticated) return;
+    executeAdminAction(event, payload, pinInput.trim());
   };
 
   // Escape key to close and return to /
@@ -147,9 +157,10 @@ export default function AdminModal({ onClose }) {
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-ksu-green to-ksu-cyan text-slate-950 font-arabic font-extrabold text-base shadow-lg hover:brightness-110 transition active:scale-95"
+                disabled={isVerifying}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-ksu-green to-ksu-cyan text-slate-950 font-arabic font-extrabold text-base shadow-lg hover:brightness-110 transition active:scale-95 disabled:opacity-50"
               >
-                تأكيد الدخول
+                {isVerifying ? 'جاري التحقق...' : 'تأكيد الدخول'}
               </button>
             </form>
           </div>

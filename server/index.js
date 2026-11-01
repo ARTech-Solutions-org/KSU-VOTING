@@ -104,10 +104,100 @@ app.post('/api/vote', (req, res) => {
 app.post('/api/admin/login', (req, res) => {
   const { pin } = req.body;
   const expectedPin = process.env.ADMIN_PIN || stateManager.settings.adminPin || '2026';
-  if (String(pin) === String(expectedPin)) {
-    res.json({ authenticated: true });
+  if (String(pin).trim() === String(expectedPin).trim()) {
+    res.json({ authenticated: true, success: true });
   } else {
-    res.status(401).json({ authenticated: false, error: 'الرمز غير صحيح' });
+    res.status(401).json({ authenticated: false, success: false, error: 'الرمز غير صحيح' });
+  }
+});
+
+app.post('/api/admin/verify', (req, res) => {
+  const { pin } = req.body;
+  const expectedPin = process.env.ADMIN_PIN || stateManager.settings.adminPin || '2026';
+  const valid = String(pin).trim() === String(expectedPin).trim();
+  res.json({ success: valid, error: valid ? null : 'رمز الدخول غير صحيح' });
+});
+
+app.post('/api/admin/action', (req, res) => {
+  const { action, payload = {}, pin } = req.body || {};
+  const expectedPin = process.env.ADMIN_PIN || stateManager.settings.adminPin || '2026';
+  if (String(pin).trim() !== String(expectedPin).trim()) {
+    return res.status(401).json({ success: false, error: 'غير مصرح - رمز الدخول غير صحيح' });
+  }
+
+  const clientIp = req.ip || req.connection?.remoteAddress || '127.0.0.1';
+
+  try {
+    switch (action) {
+      case 'setVotingState':
+      case 'admin:setVotingState':
+        stateManager.setVotingState(payload.state, clientIp);
+        break;
+      case 'setScreenMode':
+      case 'admin:setScreenMode':
+        stateManager.setScreenMode(payload.mode, clientIp);
+        break;
+      case 'updateSettings':
+      case 'admin:updateSettings':
+        stateManager.updateSettings(payload.settings, clientIp);
+        break;
+      case 'addOption':
+      case 'admin:addOption':
+        stateManager.addOption(payload.option, clientIp);
+        break;
+      case 'editOption':
+      case 'admin:editOption':
+        stateManager.editOption(payload.id, payload.data, clientIp);
+        break;
+      case 'deleteOption':
+      case 'admin:deleteOption':
+        stateManager.deleteOption(payload.id, clientIp);
+        break;
+      case 'reorderOptions':
+      case 'admin:reorderOptions':
+        stateManager.reorderOptions(payload.orderedIds, clientIp);
+        break;
+      case 'adjustVotes':
+      case 'admin:adjustVotes':
+        stateManager.adjustOptionVotes(payload.id, payload.votes, payload.reason, clientIp);
+        break;
+      case 'resetAll':
+      case 'admin:resetAll':
+        stateManager.resetAllVotes(clientIp);
+        break;
+      case 'resetOption':
+      case 'admin:resetOption':
+        stateManager.resetSingleOptionVotes(payload.id, clientIp);
+        break;
+      case 'resetLocks':
+      case 'admin:resetLocks':
+        stateManager.resetVoterLocks(clientIp);
+        io.emit('voter:locksCleared');
+        break;
+      case 'revealNext':
+      case 'admin:revealNext':
+        stateManager.revealNext();
+        break;
+      case 'revealAll':
+      case 'admin:revealAll':
+        stateManager.revealAll();
+        break;
+      case 'revealReset':
+      case 'admin:revealReset':
+        stateManager.revealReset();
+        break;
+      case 'simulateVote':
+      case 'admin:simulateVote':
+        stateManager.simulateVote();
+        break;
+      default:
+        return res.status(400).json({ success: false, error: `إجراء غير معروف: ${action}` });
+    }
+
+    io.emit('state:update', stateManager.getPublicState());
+    return res.json({ success: true, state: stateManager.getPublicState() });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
   }
 });
 

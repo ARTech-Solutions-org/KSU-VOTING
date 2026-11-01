@@ -23,7 +23,7 @@
       "rawName": "جسور",
       "title": "جسور",
       "subtitle": "",
-      "votes": 0,
+      "votes": 1,
       "enabled": true,
       "order": 2
     },
@@ -74,7 +74,22 @@
     "votingUrl": "",
     "adminPin": "2026"
   },
-  "voters": {},
+  "voters": {
+    "b181afcb-2831-404e-861b-a4337f8cdb85": {
+      "count": 1,
+      "votedOptionIds": [
+        "opt-3"
+      ],
+      "fingerprint": "7567c6ef",
+      "ip": "62.240.105.58",
+      "updatedAt": 1793554670722
+    }
+  },
   "auditLog": [],
-  "voteHistory": []
+  "voteHistory": [
+    {
+      "timestamp": 1793554670722,
+      "optionId": "opt-3"
+    }
+  ]
 }
