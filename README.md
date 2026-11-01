@@ -161,12 +161,22 @@ The app is engineered to run completely offline on a venue laptop connected to a
 - Vector SVGs and local assets
 - SQLite/JSON file-backed persistent store
 
-### Cloud Deployment (Vercel, Render, Railway, Fly.io, or VPS)
-To deploy online for wider reach:
-1. Push this repository to GitHub.
-2. In Railway / Render / Fly.io:
+### Deploying on Vercel
+This repository is pre-configured with [`vercel.json`](vercel.json) and a dedicated serverless function in [`api/index.js`](api/index.js):
+1. Go to [Vercel](https://vercel.com) and click **"Add New Project"**.
+2. Import this GitHub repository: `Mohanned-Mahmoud/KSU-VOTING`.
+3. Under **Environment Variables**, add:
+   - `DATABASE_URL`: Your Neon PostgreSQL connection string (`postgresql://...`)
+   - `ADMIN_PIN`: `2026` (or your preferred operator PIN)
+4. Click **Deploy**. Vercel will build the frontend with `scripts/build.js` and serve both static assets and API routes globally!
+
+### Cloud Deployment (Render, Railway, Fly.io, or VPS)
+To deploy as a continuous Node.js server with WebSockets:
+1. In Railway / Render / Fly.io:
    - Build command: `npm run build`
    - Start command: `node server/index.js`
-   - Set environment variable: `ADMIN_PIN=your_custom_pin`
-3. The server serves both the WebSocket real-time engine and the compiled static app on the single specified `PORT`.
+   - Set environment variables:
+     - `DATABASE_URL`: `postgresql://...`
+     - `ADMIN_PIN`: `2026`
+2. The server serves both the WebSocket real-time engine and the compiled static app on the single specified `PORT`.
 
