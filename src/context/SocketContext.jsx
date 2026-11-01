@@ -7,7 +7,10 @@ const SocketContext = createContext(null);
 
 export function SocketProvider({ children }) {
   const [socket, setSocket] = useState(null);
-  const [connected, setConnected] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [httpConnected, setHttpConnected] = useState(false);
+  const isConnected = socketConnected || httpConnected;
+
   const [state, setState] = useState({
     options: [],
     settings: {
@@ -51,11 +54,12 @@ export function SocketProvider({ children }) {
     const s = io(window.location.origin, {
       reconnectionAttempts: Infinity,
       reconnectionDelay: 1000,
-      timeout: 10000,
+      timeout: 8000,
+      transports: ['websocket', 'polling'],
     });
 
     s.on('connect', () => {
-      setConnected(true);
+      setSocketConnected(true);
       // Verify voter status
       const token = getOrCreateVoterToken();
       const fp = generateFingerprint();
@@ -63,7 +67,7 @@ export function SocketProvider({ children }) {
     });
 
     s.on('disconnect', () => {
-      setConnected(false);
+      setSocketConnected(false);
     });
 
     s.on('state:sync', (initialState) => {
@@ -93,19 +97,23 @@ export function SocketProvider({ children }) {
 
     setSocket(s);
 
-    // Resilient HTTP polling fallback when disconnected or in serverless environments (e.g., Vercel)
-    const pollInterval = setInterval(async () => {
+    // Helper to fetch fresh state immediately via HTTP (critical for Vercel and instant initial load)
+    const fetchFreshState = async () => {
       try {
         const res = await fetch('/api/state');
         if (res.ok) {
           const publicState = await res.json();
-          setState((prev) => {
-            // Only update if changed or disconnected
-            if (!connected || JSON.stringify(prev.stats) !== JSON.stringify(publicState.stats)) {
-              return publicState;
-            }
-            return prev;
-          });
+          // Ensure votingUrl is valid for current deployment
+          if (
+            !publicState.settings?.votingUrl ||
+            (publicState.settings.votingUrl.includes('localhost') && window.location.hostname !== 'localhost')
+          ) {
+            publicState.settings.votingUrl = `${window.location.origin}/vote`;
+          }
+          setState(publicState);
+          setHttpConnected(true);
+        } else {
+          setHttpConnected(false);
         }
 
         const token = getOrCreateVoterToken();
@@ -116,15 +124,25 @@ export function SocketProvider({ children }) {
           setVoterStatus(status);
         }
       } catch (err) {
-        // Silently retry on next tick
+        setHttpConnected(false);
       }
-    }, 2000);
+    };
+
+    // 1. Fetch immediately on mount so UI renders in < 50ms without waiting for socket
+    fetchFreshState();
+
+    // 2. Resilient polling fallback (for serverless platforms like Vercel where WebSockets are unavailable)
+    const pollInterval = setInterval(() => {
+      if (!socketConnected) {
+        fetchFreshState();
+      }
+    }, 1500);
 
     return () => {
       clearInterval(pollInterval);
       s.disconnect();
     };
-  }, [connected]);
+  }, [socketConnected]);
 
   // Submit vote function (supports both Socket.io and HTTP fallback)
   const submitVote = useCallback(
@@ -133,7 +151,7 @@ export function SocketProvider({ children }) {
       const fp = generateFingerprint();
 
       // If socket is connected, use real-time socket
-      if (socket && connected) {
+      if (socket && socketConnected) {
         return new Promise((resolve) => {
           socket.emit('vote:submit', { optionId, voterToken: token, fingerprint: fp }, (response) => {
             if (response && response.success) {
@@ -170,14 +188,14 @@ export function SocketProvider({ children }) {
         return { success: false, error: 'تعذر الاتصال بالخادم، يرجى المحاولة ثانية' };
       }
     },
-    [socket, connected]
+    [socket, socketConnected]
   );
 
   return (
     <SocketContext.Provider
       value={{
         socket,
-        connected,
+        connected: isConnected,
         state,
         voterStatus,
         latestVoteEvent,

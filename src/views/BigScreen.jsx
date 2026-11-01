@@ -143,7 +143,7 @@ export default function BigScreen() {
         {/* =========================================================================
             HEADER LAYER: Swapped Logos - KSU Logo (Top-Left) & Meeting Logo (Top-Right)
            ========================================================================= */}
-        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-10 md:px-14 pt-8 md:pt-10 pointer-events-none">
+        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-[clamp(16px,3vw,56px)] pt-[clamp(10px,2vh,36px)] pointer-events-none">
           {/* Top-Left: King Saud University Logo including Arabic sub-lines */}
           <button
             onClick={() => navigate('/admin')}
@@ -154,7 +154,7 @@ export default function BigScreen() {
               <img
                 src="/assets/logos/ksu-logo-full-with-arabic-lines.png"
                 alt="King Saud University"
-                className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                className="h-[clamp(38px,6.5vh,76px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
               />
               <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-amber-400/40 whitespace-nowrap shadow-lg">
                 Admin Panel (A)
@@ -173,7 +173,7 @@ export default function BigScreen() {
               <img
                 src="/assets/svg/meeting-logo-cube-with-text.svg"
                 alt="6th Annual KSUMC Pharmacy Meeting"
-                className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                className="h-[clamp(38px,6.5vh,76px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
                 onError={(e) => {
                   // Fallback to PNG if SVG fails
                   e.target.src = '/assets/logos/meeting-logo-cube-with-text.png';
@@ -190,7 +190,7 @@ export default function BigScreen() {
         {/* =========================================================================
             MAIN STAGE CONTENT: IDLE MODE vs RESULTS MODE
            ========================================================================= */}
-        <main className="absolute inset-0 z-20 flex flex-col justify-center items-center px-8 md:px-16 pointer-events-none">
+        <main className="absolute inset-0 z-20 flex flex-col justify-center items-center px-4 md:px-12 pointer-events-none">
           {/* VIEW A: IDLE (ATTRACT) MODE */}
           {screenMode === 'idle' && (
             <div
@@ -199,16 +199,16 @@ export default function BigScreen() {
               }`}
             >
               {/* Cyan Eyebrow: AI INNOVATION COMPETITION */}
-              <div className="relative mb-3">
+              <div className="relative mb-[clamp(4px,0.8vh,12px)]">
                 <img
                   src="/assets/text/ai-innovation-competition-cyan.png"
                   alt="AI INNOVATION COMPETITION"
-                  className="h-7 md:h-9 w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
+                  className="h-[clamp(18px,3vh,34px)] w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
                 />
               </div>
 
               {/* Thin White Divider Line under Cyan text */}
-              <div className="relative w-full max-w-[680px] md:max-w-[850px] mb-5">
+              <div className="relative w-full max-w-[clamp(260px,50vw,850px)] mb-[clamp(8px,1.4vh,18px)]">
                 <img
                   src="/assets/text/divider-line-white.png"
                   alt=""
@@ -221,7 +221,7 @@ export default function BigScreen() {
                 <img
                   src="/assets/text/title-arabic-white.png"
                   alt="ذكاء يُبتكر"
-                  className="h-28 md:h-36 lg:h-44 w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
+                  className="h-[clamp(70px,16vh,165px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
                 />
               </div>
             </div>
@@ -235,20 +235,20 @@ export default function BigScreen() {
               }`}
             >
               {/* Results Header */}
-              <div className="flex flex-col items-center mb-6 text-center animate-results-rise">
-                <div className="flex items-center gap-2 text-ksu-cyan font-condensed tracking-wider uppercase text-sm md:text-base font-extrabold text-glow-cyan">
-                  <BarChart3 className="w-5 h-5" />
+              <div className="flex flex-col items-center mb-[clamp(6px,1.2vh,16px)] text-center animate-results-rise">
+                <div className="flex items-center gap-2 text-ksu-cyan font-condensed tracking-wider uppercase text-[clamp(11px,1.4vh,15px)] font-extrabold text-glow-cyan">
+                  <BarChart3 className="w-[clamp(14px,1.7vh,19px)] h-[clamp(14px,1.7vh,19px)]" />
                   <span>AI Innovation Competition - Live Results</span>
                 </div>
-                <h2 className="font-arabic font-black text-2xl md:text-4xl text-white tracking-wide text-glow-white mt-1">
+                <h2 className="font-arabic font-black text-[clamp(18px,2.8vh,34px)] text-white tracking-wide text-glow-white mt-0.5">
                   نتائج التصويت المباشر
                 </h2>
-                <div className="results-total mt-2">
+                <div className="results-total mt-1 text-[clamp(10px,1.2vh,13px)]">
                   <span>Total votes</span>
-                  <strong>{new Intl.NumberFormat('en-US').format(state.stats?.totalVotes || 0)}</strong>
+                  <strong className="text-[clamp(13px,1.8vh,18px)]">{new Intl.NumberFormat('en-US').format(state.stats?.totalVotes || 0)}</strong>
                 </div>
                 {state.settings?.revealMode && (
-                  <div className="mt-1 px-3 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-arabic text-xs font-bold">
+                  <div className="mt-1 px-3 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-arabic text-[clamp(10px,1.2vh,12px)] font-bold">
                     وضع الكشف التدريجي (المرحلة {state.settings?.revealedCount || 0} من{' '}
                     {state.options?.length || 0})
                   </div>
@@ -273,12 +273,12 @@ export default function BigScreen() {
             BOTTOM LAYER: QR Code Badge (Bottom-Right) & Live Counter (Bottom-Left)
             Clickable: Clicking either element (or clicking its place when hidden) toggles them
            ========================================================================= */}
-        <footer className="absolute bottom-8 left-10 right-10 z-30 flex items-end justify-between pointer-events-none">
+        <footer className="absolute bottom-[clamp(10px,2vh,32px)] left-[clamp(14px,2.5vw,40px)] right-[clamp(14px,2.5vw,40px)] z-30 flex items-end justify-between pointer-events-none">
           {/* Bottom-Left: Live Total Votes Counter */}
           <div
             onClick={toggleBottomBar}
             title={showBottomBar ? 'انقر لإخفاء عدد الأصوات والـ QR (H)' : 'انقر لإعادة إظهار عدد الأصوات والـ QR (H)'}
-            className={`pointer-events-auto cursor-pointer min-w-[200px] min-h-[90px] flex items-end justify-start transition-all duration-500 ease-out transform ${
+            className={`pointer-events-auto cursor-pointer min-w-[clamp(140px,16vw,200px)] min-h-[clamp(60px,8vh,90px)] flex items-end justify-start transition-all duration-500 ease-out transform ${
               showBottomBar
                 ? 'opacity-100 scale-100 translate-y-0'
                 : 'opacity-0 scale-95 translate-y-3 hover:opacity-20'
@@ -294,7 +294,7 @@ export default function BigScreen() {
           <div
             onClick={toggleBottomBar}
             title={showBottomBar ? 'انقر لإخفاء عدد الأصوات والـ QR (H)' : 'انقر لإعادة إظهار عدد الأصوات والـ QR (H)'}
-            className={`pointer-events-auto cursor-pointer min-w-[150px] min-h-[150px] flex items-end justify-end transition-all duration-500 ease-out transform ${
+            className={`pointer-events-auto cursor-pointer min-w-[clamp(100px,12vw,160px)] min-h-[clamp(100px,12vw,160px)] flex items-end justify-end transition-all duration-500 ease-out transform ${
               showBottomBar
                 ? 'opacity-100 scale-100 translate-y-0'
                 : 'opacity-0 scale-95 translate-y-3 hover:opacity-20'
