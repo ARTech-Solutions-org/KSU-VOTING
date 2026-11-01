@@ -2,18 +2,20 @@ import React, { useEffect, useRef } from 'react';
 
 export default function BigScreenBackground({ rippleTrigger }) {
   const canvasRef = useRef(null);
-  const rippleRef = useRef({ active: false, radius: 0, maxRadius: 1200, alpha: 0, x: 960, y: 540 });
+  const rippleRef = useRef({ active: false, radius: 0, maxRadius: 1600, alpha: 0, x: 960, y: 540 });
 
   // Trigger ripple when rippleTrigger prop changes
   useEffect(() => {
     if (rippleTrigger) {
+      const w = typeof window !== 'undefined' ? window.innerWidth : 1920;
+      const h = typeof window !== 'undefined' ? window.innerHeight : 1080;
       rippleRef.current = {
         active: true,
         radius: 40,
-        maxRadius: 1600,
+        maxRadius: Math.max(w, h) * 1.2,
         alpha: 0.7,
-        x: 960, // center
-        y: 600,
+        x: w / 2, // dynamic center
+        y: h * 0.55,
       };
     }
   }, [rippleTrigger]);
@@ -25,8 +27,15 @@ export default function BigScreenBackground({ rippleTrigger }) {
     if (!ctx) return;
 
     let animId;
-    const width = (canvas.width = 1920);
-    const height = (canvas.height = 1080);
+    let width = (canvas.width = window.innerWidth || 1920);
+    let height = (canvas.height = window.innerHeight || 1080);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
 
     // Subtle ambient floating particles (clean and unobtrusive)
     const particleCount = 45;
@@ -36,7 +45,7 @@ export default function BigScreenBackground({ rippleTrigger }) {
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
-        y: 350 + Math.random() * (height - 350), // Confined strictly to lower gradient
+        y: height * 0.35 + Math.random() * (height * 0.65), // Confined strictly to lower gradient
         size: Math.random() * 2 + 0.8,
         speedY: -(Math.random() * 0.35 + 0.1),
         speedX: (Math.random() - 0.5) * 0.15,
@@ -57,7 +66,7 @@ export default function BigScreenBackground({ rippleTrigger }) {
         p.pulse += 0.025;
 
         // Wrap around within gradient area
-        if (p.y < 340) {
+        if (p.y < height * 0.3) {
           p.y = height + 10;
           p.x = Math.random() * width;
         }
@@ -109,6 +118,7 @@ export default function BigScreenBackground({ rippleTrigger }) {
 
     return () => {
       cancelAnimationFrame(animId);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 

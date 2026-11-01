@@ -118,8 +118,8 @@ export default function BigScreen() {
       ref={stageRef}
       className={`stage-container ${cursorHidden ? 'cursor-none' : 'cursor-default'}`}
     >
-      {/* 16:9 Aspect Ratio Master Stage */}
-      <div className="stage-16-9 relative bg-slate-950 shadow-2xl select-none">
+      {/* Fluid Full-Bleed Master Stage */}
+      <div className="stage-16-9 w-full h-full relative select-none">
         {/* Animated Background & GPU Canvas Particles */}
         <BigScreenBackground rippleTrigger={latestVoteEvent?.timestamp} />
 
@@ -143,7 +143,7 @@ export default function BigScreen() {
         {/* =========================================================================
             HEADER LAYER: Swapped Logos - KSU Logo (Top-Left) & Meeting Logo (Top-Right)
            ========================================================================= */}
-        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-[clamp(16px,3vw,56px)] pt-[clamp(10px,2vh,36px)] pointer-events-none">
+        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-[clamp(16px,3.5vw,64px)] pt-[clamp(14px,2.5vh,40px)] pointer-events-none">
           {/* Top-Left: King Saud University Logo including Arabic sub-lines */}
           <button
             onClick={() => navigate('/admin')}
@@ -203,12 +203,12 @@ export default function BigScreen() {
                 <img
                   src="/assets/text/ai-innovation-competition-cyan.png"
                   alt="AI INNOVATION COMPETITION"
-                  className="h-[clamp(18px,3vh,34px)] w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
+                  className="h-[clamp(18px,3.2vh,42px)] w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
                 />
               </div>
 
               {/* Thin White Divider Line under Cyan text */}
-              <div className="relative w-full max-w-[clamp(260px,50vw,850px)] mb-[clamp(8px,1.4vh,18px)]">
+              <div className="relative w-full max-w-[clamp(280px,50vw,950px)] mb-[clamp(8px,1.4vh,18px)]">
                 <img
                   src="/assets/text/divider-line-white.png"
                   alt=""
@@ -221,7 +221,7 @@ export default function BigScreen() {
                 <img
                   src="/assets/text/title-arabic-white.png"
                   alt="ذكاء يُبتكر"
-                  className="h-[clamp(70px,16vh,165px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
+                  className="h-[clamp(80px,18vh,220px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
                 />
               </div>
             </div>
@@ -273,7 +273,7 @@ export default function BigScreen() {
             BOTTOM LAYER: QR Code Badge (Bottom-Right) & Live Counter (Bottom-Left)
             Clickable: Clicking either element (or clicking its place when hidden) toggles them
            ========================================================================= */}
-        <footer className="absolute bottom-[clamp(10px,2vh,32px)] left-[clamp(14px,2.5vw,40px)] right-[clamp(14px,2.5vw,40px)] z-30 flex items-end justify-between pointer-events-none">
+        <footer className="absolute bottom-0 left-0 right-0 z-30 flex items-end justify-between px-[clamp(16px,3.5vw,64px)] pb-[clamp(14px,2.5vh,40px)] pointer-events-none">
           {/* Bottom-Left: Live Total Votes Counter */}
           <div
             onClick={toggleBottomBar}
