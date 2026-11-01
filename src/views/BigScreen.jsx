@@ -162,25 +162,30 @@ export default function BigScreen() {
             </div>
           </button>
 
-          {/* Top-Right: 6th Annual KSUMC Pharmacy Meeting Cube Logo */}
+          {/* Top-Right: 6th Annual KSUMC Pharmacy Meeting Cube Logo (Fully Responsive & Unclipped) */}
           <button
             onClick={toggleMode}
             title="انقر للتبديل بين الشاشة الترحيبية والنتائج (R)"
+            dir="ltr"
             className="pointer-events-auto flex items-center group focus:outline-none transition-transform duration-300 hover:scale-105 active:scale-95 animate-logo-intro [animation-delay:150ms]"
           >
-            {/* Vector Meeting Logo with Cube + Text */}
-            <div className="relative">
+            <div className="relative flex items-center gap-2.5 sm:gap-3.5">
               <img
-                src="/assets/svg/meeting-logo-cube-with-text.svg"
-                alt="6th Annual KSUMC Pharmacy Meeting"
-                className="h-[clamp(38px,6.5vh,76px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
-                onError={(e) => {
-                  // Fallback to PNG if SVG fails
-                  e.target.src = '/assets/logos/meeting-logo-cube-with-text.png';
-                }}
+                src="/assets/svg/cube-logo-only.svg"
+                alt="KSUMC Cube"
+                className="h-[clamp(36px,6.2vh,74px)] w-auto object-contain drop-shadow-[0_4px_14px_rgba(0,242,254,0.35)] shrink-0"
               />
+              <div className="flex flex-col text-left leading-none select-none">
+                <span className="font-condensed font-semibold text-[clamp(11px,1.65vh,20px)] tracking-[0.14em] text-white/95 uppercase whitespace-nowrap mb-1">
+                  6TH ANNUAL KSUMC
+                </span>
+                <span className="font-condensed font-extrabold text-[clamp(13px,2.1vh,25px)] tracking-[0.07em] text-white uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                  PHARMACY MEETING
+                </span>
+              </div>
+
               {/* Subtle hover pulse indicator */}
-              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-ksu-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-ksu-cyan/30 whitespace-nowrap shadow-lg">
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-ksu-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-ksu-cyan/30 whitespace-nowrap shadow-lg">
                 {screenMode === 'idle' ? 'Show Results (R)' : 'Show Welcome (R)'}
               </span>
             </div>
