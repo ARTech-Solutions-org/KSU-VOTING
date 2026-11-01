@@ -18,22 +18,25 @@ export function getDir(text) {
 }
 
 // Parses an option name to extract line 1 (title) and line 2 (subtitle)
-// Supports "RxCompass Ai | بوصلة الصرف الذكي" -> title: "RxCompass Ai", subtitle: "بوصلة الصرف الذكي"
+// Supports "RxCompass Ai | بوصلة الصرف الذكي" or "نظام إدارة ورديات صيدلية العيادات الخارجية — مستشفى الملك خالد الجامعي"
 export function parseOptionName(option) {
   if (!option) return { title: '', subtitle: '', raw: '' };
 
-  let title = option.title || '';
-  let subtitle = option.subtitle || '';
-  const raw = option.rawName || (subtitle ? `${title} | ${subtitle}` : title);
+  let title = (option.title || '').trim();
+  let subtitle = (option.subtitle || '').trim();
+  const raw = (option.rawName || (subtitle ? `${title} — ${subtitle}` : title)).trim();
 
-  if (!subtitle && title.includes('|')) {
-    const parts = title.split('|').map((s) => s.trim());
+  const separators = ['|', '—', '–'];
+  const sep = separators.find((s) => title.includes(s) || (!subtitle && raw.includes(s)));
+
+  if (!subtitle && sep && title.includes(sep)) {
+    const parts = title.split(sep).map((s) => s.trim());
     title = parts[0];
-    subtitle = parts.slice(1).join(' | ');
-  } else if (!title && raw.includes('|')) {
-    const parts = raw.split('|').map((s) => s.trim());
+    subtitle = parts.slice(1).join(' — ');
+  } else if (!title && sep && raw.includes(sep)) {
+    const parts = raw.split(sep).map((s) => s.trim());
     title = parts[0];
-    subtitle = parts.slice(1).join(' | ');
+    subtitle = parts.slice(1).join(' — ');
   } else if (!title) {
     title = raw;
   }

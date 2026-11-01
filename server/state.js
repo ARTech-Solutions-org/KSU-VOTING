@@ -71,6 +71,15 @@ const INITIAL_OPTIONS = [
     enabled: true,
     order: 4,
   },
+  {
+    id: 'opt-6',
+    rawName: 'نظام إدارة ورديات صيدلية العيادات الخارجية — مستشفى الملك خالد الجامعي',
+    title: 'نظام إدارة ورديات صيدلية العيادات الخارجية',
+    subtitle: 'مستشفى الملك خالد الجامعي',
+    votes: 0,
+    enabled: true,
+    order: 5,
+  },
 ];
 
 const INITIAL_SETTINGS = {
