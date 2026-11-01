@@ -162,8 +162,11 @@ class StateManager {
     }
   }
 
-  // Local file backup
+  // Local file backup (disabled in serverless environments like Vercel)
   saveFallback() {
+    if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+      return;
+    }
     try {
       const data = {
         options: this.options,
@@ -174,7 +177,7 @@ class StateManager {
       };
       fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
     } catch (err) {
-      console.error('Failed to save store.json backup:', err.message);
+      // Gracefully ignore local filesystem write errors
     }
   }
 
