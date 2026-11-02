@@ -154,7 +154,7 @@ export default function BigScreen() {
               <img
                 src="/assets/logos/ksu-logo-full-with-arabic-lines.png"
                 alt="King Saud University"
-                className="h-[clamp(38px,6.5vh,76px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                className="h-[clamp(38px,6.5vh,88px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
               />
               <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-amber-400/40 whitespace-nowrap shadow-lg">
                 Admin Panel (A)
@@ -173,13 +173,13 @@ export default function BigScreen() {
               <img
                 src="/assets/svg/cube-logo-only.svg"
                 alt="KSUMC Cube"
-                className="h-[clamp(36px,6.2vh,74px)] w-auto object-contain drop-shadow-[0_4px_14px_rgba(0,242,254,0.35)] shrink-0"
+                className="h-[clamp(36px,6.2vh,84px)] w-auto object-contain drop-shadow-[0_4px_14px_rgba(0,242,254,0.35)] shrink-0"
               />
               <div className="flex flex-col text-left leading-none select-none">
-                <span className="font-condensed font-semibold text-[clamp(11px,1.65vh,20px)] tracking-[0.14em] text-white/95 uppercase whitespace-nowrap mb-1">
+                <span className="font-condensed font-semibold text-[clamp(11px,1.65vh,22px)] tracking-[0.14em] text-white/95 uppercase whitespace-nowrap mb-1">
                   6TH ANNUAL KSUMC
                 </span>
-                <span className="font-condensed font-extrabold text-[clamp(13px,2.1vh,25px)] tracking-[0.07em] text-white uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                <span className="font-condensed font-extrabold text-[clamp(13px,2.1vh,28px)] tracking-[0.07em] text-white uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
                   PHARMACY MEETING
                 </span>
               </div>
@@ -199,35 +199,43 @@ export default function BigScreen() {
           {/* VIEW A: IDLE (ATTRACT) MODE */}
           {screenMode === 'idle' && (
             <div
-              className={`flex flex-col items-center justify-center text-center transition-all duration-700 ease-out transform ${
-                isTransitioning ? 'scale-90 opacity-0 -translate-y-8' : 'scale-100 opacity-100 translate-y-0'
+              className={`flex flex-col items-center justify-center text-center -translate-y-[clamp(14px,2.6vh,44px)] transition-all duration-700 ease-out transform ${
+                isTransitioning ? 'scale-90 opacity-0 -translate-y-12' : 'scale-100 opacity-100'
               }`}
             >
-              {/* Cyan Eyebrow: AI INNOVATION COMPETITION */}
-              <div className="relative mb-[clamp(4px,0.8vh,12px)]">
-                <img
-                  src="/assets/text/ai-innovation-competition-cyan.png"
-                  alt="AI INNOVATION COMPETITION"
-                  className="h-[clamp(18px,3.2vh,42px)] w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
-                />
+              {/* Text Group: Shifted Upwards */}
+              <div className="flex flex-col items-center justify-center">
+                {/* Cyan Eyebrow: AI INNOVATION COMPETITION */}
+                <div className="relative mb-[clamp(4px,0.7vh,10px)]">
+                  <img
+                    src="/assets/text/ai-innovation-competition-cyan.png"
+                    alt="AI INNOVATION COMPETITION"
+                    className="h-[clamp(16px,2.6vh,38px)] w-auto object-contain drop-shadow-[0_0_20px_rgba(0,242,254,0.7)] animate-masked-reveal"
+                  />
+                </div>
+
+                {/* Thin White Divider Line under Cyan text */}
+                <div className="relative w-full max-w-[clamp(260px,46vw,840px)] mb-[clamp(6px,1.1vh,16px)]">
+                  <img
+                    src="/assets/text/divider-line-white.png"
+                    alt=""
+                    className="w-full h-[clamp(2px,0.25vh,4px)] object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-line-reveal"
+                  />
+                </div>
+
+                {/* Main Arabic Title: ذكاء يُبتكر */}
+                <div className="relative group">
+                  <img
+                    src="/assets/text/title-arabic-white.png"
+                    alt="ذكاء يُبتكر"
+                    className="h-[clamp(70px,13.5vh,185px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
+                  />
+                </div>
               </div>
 
-              {/* Thin White Divider Line under Cyan text */}
-              <div className="relative w-full max-w-[clamp(280px,50vw,950px)] mb-[clamp(8px,1.4vh,18px)]">
-                <img
-                  src="/assets/text/divider-line-white.png"
-                  alt=""
-                  className="w-full h-1 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-line-reveal"
-                />
-              </div>
-
-              {/* Main Arabic Title: ذكاء يُبتكر */}
-              <div className="relative group">
-                <img
-                  src="/assets/text/title-arabic-white.png"
-                  alt="ذكاء يُبتكر"
-                  className="h-[clamp(80px,18vh,220px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
-                />
+              {/* Large Hero QR Code Card directly underneath */}
+              <div className="mt-[clamp(12px,2.2vh,34px)] pointer-events-auto animate-card-intro">
+                <QRCodeCard url={state.settings?.votingUrl} variant="hero" />
               </div>
             </div>
           )}
@@ -275,11 +283,11 @@ export default function BigScreen() {
         </main>
 
         {/* =========================================================================
-            BOTTOM LAYER: QR Code Badge (Bottom-Right) & Live Counter (Bottom-Left)
-            Clickable: Clicking either element (or clicking its place when hidden) toggles them
+            BOTTOM LAYER: Live Counter (Right) & Corner QR Code (Left in Results Mode)
+            Clickable: Clicking either element (or pressing H) toggles visibility
            ========================================================================= */}
         <footer className="absolute bottom-0 left-0 right-0 z-30 flex items-end justify-between px-[clamp(16px,3.5vw,64px)] pb-[clamp(14px,2.5vh,40px)] pointer-events-none">
-          {/* Bottom-Left: Live Total Votes Counter */}
+          {/* Bottom-Right (in RTL): Live Total Votes Counter */}
           <div
             onClick={toggleBottomBar}
             title={showBottomBar ? 'انقر لإخفاء عدد الأصوات والـ QR (H)' : 'انقر لإعادة إظهار عدد الأصوات والـ QR (H)'}
@@ -295,18 +303,22 @@ export default function BigScreen() {
             />
           </div>
 
-          {/* Bottom-Right: QR Code Card */}
-          <div
-            onClick={toggleBottomBar}
-            title={showBottomBar ? 'انقر لإخفاء عدد الأصوات والـ QR (H)' : 'انقر لإعادة إظهار عدد الأصوات والـ QR (H)'}
-            className={`pointer-events-auto cursor-pointer min-w-[clamp(100px,12vw,160px)] min-h-[clamp(100px,12vw,160px)] flex items-end justify-end transition-all duration-500 ease-out transform ${
-              showBottomBar
-                ? 'opacity-100 scale-100 translate-y-0'
-                : 'opacity-0 scale-95 translate-y-3 hover:opacity-20'
-            }`}
-          >
-            <QRCodeCard url={state.settings?.votingUrl} />
-          </div>
+          {/* Bottom-Left (in RTL): Corner QR Code Card - Shown in Results Mode */}
+          {screenMode === 'results' ? (
+            <div
+              onClick={toggleBottomBar}
+              title={showBottomBar ? 'انقر لإخفاء الـ QR (H)' : 'انقر لإعادة إظهار الـ QR (H)'}
+              className={`pointer-events-auto cursor-pointer min-w-[clamp(100px,12vw,160px)] min-h-[clamp(100px,12vw,160px)] flex items-end justify-end transition-all duration-500 ease-out transform ${
+                showBottomBar
+                  ? 'opacity-100 scale-100 translate-y-0'
+                  : 'opacity-0 scale-95 translate-y-3 hover:opacity-20'
+              }`}
+            >
+              <QRCodeCard url={state.settings?.votingUrl} variant="corner" />
+            </div>
+          ) : (
+            <div className="w-[clamp(100px,12vw,160px)] pointer-events-none" />
+          )}
         </footer>
 
         {/* Quick floating controls: Fullscreen & Sound indicators */}
