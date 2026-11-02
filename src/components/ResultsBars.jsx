@@ -38,7 +38,7 @@ export default function ResultsBars({
   }, [revealMode, revealedCount, displayOptions.length]);
 
   return (
-    <div className="w-full max-w-5xl mx-auto flex flex-col gap-[clamp(5px,0.85vh,11px)] px-2 md:px-4">
+    <div className="w-full max-w-[clamp(920px,72vw,2260px)] mx-auto flex flex-col gap-[clamp(8px,1.3vh,20px)] px-2 md:px-4">
       {displayOptions.map((opt, index) => {
         const rank = index + 1;
         const votes = opt.votes || 0;
@@ -81,7 +81,7 @@ export default function ResultsBars({
           <div
             key={opt.id}
             style={{ animationDelay: `${index * 80}ms` }}
-            className={`relative rounded-xl md:rounded-2xl overflow-hidden backdrop-blur-xl border transition-all duration-700 animate-result-row-in ${cardBorder} ${glowShadow} ${
+            className={`relative rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden backdrop-blur-xl border transition-all duration-700 animate-result-row-in ${cardBorder} ${glowShadow} ${
               isFirst ? 'bg-[#0f3458]/85 scale-[1.01]' : 'bg-[#0a233f]/75'
             } ${!isRevealed ? 'opacity-40 grayscale' : 'opacity-100'}`}
           >
@@ -96,25 +96,25 @@ export default function ResultsBars({
             {/* Glowing leading edge bar */}
             {isRevealed && (
               <div
-                className="absolute top-0 bottom-0 w-1 bg-ksu-cyan shadow-[0_0_15px_#00f2fe] transition-all duration-1000 ease-out"
+                className="absolute top-0 bottom-0 w-[clamp(2px,0.35vw,6px)] bg-ksu-cyan shadow-[0_0_20px_#00f2fe] transition-all duration-1000 ease-out"
                 style={{ right: `${barWidthPct}%` }}
               />
             )}
 
-            {/* Content row - Fluid scaling */}
-            <div className="relative z-10 flex items-center justify-between px-[clamp(8px,1.2vw,18px)] py-[clamp(5px,0.8vh,12px)] gap-2 md:gap-4">
+            {/* Content row - Scaled for large screens */}
+            <div className="relative z-10 flex items-center justify-between px-[clamp(12px,1.8vw,36px)] py-[clamp(10px,1.6vh,24px)] gap-3 md:gap-6">
               {/* Left side: Rank badge + Option name */}
-              <div className="flex items-center gap-[clamp(6px,0.9vw,14px)] min-w-0 flex-1">
+              <div className="flex items-center gap-[clamp(10px,1.4vw,28px)] min-w-0 flex-1">
                 {/* Rank badge */}
                 <div
-                  className={`flex items-center justify-center w-[clamp(24px,3.2vh,38px)] h-[clamp(24px,3.2vh,38px)] rounded-lg md:rounded-xl border shadow-md font-condensed text-[clamp(11px,1.5vh,17px)] shrink-0 ${rankBadgeBg}`}
+                  className={`flex items-center justify-center w-[clamp(34px,4.8vh,68px)] h-[clamp(34px,4.8vh,68px)] rounded-xl md:rounded-2xl border shadow-md font-condensed text-[clamp(14px,2.2vh,32px)] font-black shrink-0 ${rankBadgeBg}`}
                 >
                   {isFirst ? (
-                    <Trophy className="w-[clamp(12px,1.7vh,18px)] h-[clamp(12px,1.7vh,18px)] text-slate-950" />
+                    <Trophy className="w-[clamp(18px,2.6vh,36px)] h-[clamp(18px,2.6vh,36px)] text-slate-950" />
                   ) : isSecond ? (
-                    <Award className="w-[clamp(12px,1.7vh,18px)] h-[clamp(12px,1.7vh,18px)] text-slate-900" />
+                    <Award className="w-[clamp(18px,2.6vh,36px)] h-[clamp(18px,2.6vh,36px)] text-slate-900" />
                   ) : isThird ? (
-                    <Medal className="w-[clamp(12px,1.7vh,18px)] h-[clamp(12px,1.7vh,18px)] text-white" />
+                    <Medal className="w-[clamp(18px,2.6vh,36px)] h-[clamp(18px,2.6vh,36px)] text-white" />
                   ) : (
                     <span>{rank}</span>
                   )}
@@ -126,10 +126,10 @@ export default function ResultsBars({
                     <>
                       <bdi
                         dir={titleDir}
-                        className={`font-arabic font-extrabold truncate text-white ${
+                        className={`font-arabic truncate text-white ${
                           isFirst
-                            ? 'text-[clamp(12px,1.7vh,18px)] text-glow-white'
-                            : 'text-[clamp(11px,1.5vh,16px)]'
+                            ? 'font-black text-[clamp(15px,2.4vh,34px)] text-glow-white'
+                            : 'font-extrabold text-[clamp(14px,2.1vh,30px)]'
                         }`}
                       >
                         {title}
@@ -137,7 +137,7 @@ export default function ResultsBars({
                       {hasSubtitle && (
                         <bdi
                           dir={subtitleDir}
-                          className="font-arabic font-medium text-[clamp(9px,1.1vh,12px)] text-cyan-200/90 truncate mt-0.5"
+                          className="font-arabic font-medium text-[clamp(11px,1.5vh,22px)] text-cyan-200/90 truncate mt-0.5 sm:mt-1"
                         >
                           {subtitle}
                         </bdi>
@@ -145,8 +145,8 @@ export default function ResultsBars({
                     </>
                   ) : (
                     <div className="flex items-center gap-2 text-slate-400">
-                      <Sparkles className="w-3.5 h-3.5 animate-spin text-ksu-cyan" />
-                      <span className="font-arabic font-bold text-[clamp(11px,1.4vh,15px)] tracking-widest">
+                      <Sparkles className="w-4 h-4 animate-spin text-ksu-cyan" />
+                      <span className="font-arabic font-bold text-[clamp(13px,1.8vh,24px)] tracking-widest">
                         قيد الكشف...
                       </span>
                     </div>
@@ -155,14 +155,14 @@ export default function ResultsBars({
               </div>
 
               {/* Right side: Percentages and Vote Count */}
-              <div className="flex items-center gap-[clamp(6px,1vw,14px)] shrink-0">
+              <div className="flex items-center gap-[clamp(10px,1.5vw,30px)] shrink-0">
                 {isRevealed ? (
                   <>
                     {/* Vote count */}
                     {showCounts && (
-                      <div className="text-left font-condensed font-extrabold text-[clamp(12px,1.7vh,18px)] text-slate-200 min-w-[42px] leading-none">
+                      <div className="text-left font-condensed font-extrabold text-[clamp(14px,2.2vh,30px)] text-slate-200 min-w-[clamp(50px,5vw,100px)] leading-none">
                         <span>{votes.toLocaleString()}</span>
-                        <span className="text-[clamp(8px,1vh,10px)] uppercase text-slate-400 font-semibold ml-1">
+                        <span className="text-[clamp(10px,1.3vh,18px)] uppercase text-slate-400 font-semibold ml-1.5">
                           صوت
                         </span>
                       </div>
@@ -171,7 +171,7 @@ export default function ResultsBars({
                     {/* Percentage Pill */}
                     {showPercentages && (
                       <div
-                        className={`flex items-center justify-center px-[clamp(6px,0.8vw,12px)] py-[clamp(2px,0.4vh,5px)] rounded-full font-condensed font-black text-[clamp(11px,1.5vh,15px)] border shadow-sm ${
+                        className={`flex items-center justify-center px-[clamp(10px,1.2vw,24px)] py-[clamp(4px,0.7vh,12px)] rounded-full font-condensed font-black text-[clamp(14px,2.2vh,32px)] border shadow-sm ${
                           isFirst
                             ? 'bg-amber-400 text-slate-950 border-amber-300'
                             : 'bg-ksu-cyan/20 text-ksu-cyan border-ksu-cyan/40'
@@ -182,7 +182,7 @@ export default function ResultsBars({
                     )}
                   </>
                 ) : (
-                  <div className="px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 font-condensed text-[clamp(10px,1.2vh,12px)] text-slate-400">
+                  <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 font-condensed text-[clamp(12px,1.6vh,20px)] text-slate-400">
                     ???
                   </div>
                 )}

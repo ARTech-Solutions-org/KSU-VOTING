@@ -271,21 +271,21 @@ export default function BigScreen() {
                 isTransitioning ? 'scale-90 opacity-0 translate-y-8' : 'scale-100 opacity-100 translate-y-0'
               }`}
             >
-              {/* Results Header */}
-              <div className="flex flex-col items-center mb-[clamp(6px,1.2vh,16px)] text-center animate-results-rise">
-                <div className="flex items-center gap-2 text-ksu-cyan font-condensed tracking-wider uppercase text-[clamp(11px,1.4vh,15px)] font-extrabold text-glow-cyan">
-                  <BarChart3 className="w-[clamp(14px,1.7vh,19px)] h-[clamp(14px,1.7vh,19px)]" />
+              {/* Results Header - Scaled for large stage display */}
+              <div className="flex flex-col items-center mb-[clamp(10px,2vh,32px)] text-center animate-results-rise">
+                <div className="flex items-center gap-2.5 text-ksu-cyan font-condensed tracking-wider uppercase text-[clamp(12px,1.8vh,24px)] font-extrabold text-glow-cyan">
+                  <BarChart3 className="w-[clamp(16px,2.2vh,30px)] h-[clamp(16px,2.2vh,30px)]" />
                   <span>AI Innovation Competition - Live Results</span>
                 </div>
-                <h2 className="font-arabic font-black text-[clamp(18px,2.8vh,34px)] text-white tracking-wide text-glow-white mt-0.5">
+                <h2 className="font-arabic font-black text-[clamp(24px,4.2vh,58px)] text-white tracking-wide text-glow-white mt-1">
                   نتائج التصويت المباشر
                 </h2>
-                <div className="results-total mt-1 text-[clamp(10px,1.2vh,13px)]">
-                  <span>Total votes</span>
-                  <strong className="text-[clamp(13px,1.8vh,18px)]">{new Intl.NumberFormat('en-US').format(state.stats?.totalVotes || 0)}</strong>
+                <div className="results-total mt-1 sm:mt-2 flex items-baseline gap-2.5">
+                  <span className="text-[clamp(12px,1.6vh,22px)]">Total votes</span>
+                  <strong className="text-[clamp(22px,3.2vh,46px)]">{new Intl.NumberFormat('en-US').format(state.stats?.totalVotes || 0)}</strong>
                 </div>
                 {state.settings?.revealMode && (
-                  <div className="mt-1 px-3 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-arabic text-[clamp(10px,1.2vh,12px)] font-bold">
+                  <div className="mt-2 px-4 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-arabic text-[clamp(11px,1.5vh,18px)] font-bold">
                     وضع الكشف التدريجي (المرحلة {state.settings?.revealedCount || 0} من{' '}
                     {state.options?.length || 0})
                   </div>
