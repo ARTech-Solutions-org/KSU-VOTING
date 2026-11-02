@@ -160,9 +160,6 @@ export default function BigScreen() {
                 alt="King Saud University"
                 className="h-[clamp(52px,10.5vh,175px)] w-auto object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.45)]"
               />
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-xs font-condensed tracking-wider uppercase text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2.5 py-0.5 rounded-full border border-amber-400/40 whitespace-nowrap shadow-lg">
-                Admin Panel (A)
-              </span>
             </div>
           </button>
 
@@ -187,11 +184,6 @@ export default function BigScreen() {
                   PHARMACY MEETING
                 </span>
               </div>
-
-              {/* Subtle hover pulse indicator */}
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-xs font-condensed tracking-wider uppercase text-ksu-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2.5 py-0.5 rounded-full border border-ksu-cyan/30 whitespace-nowrap shadow-lg">
-                {screenMode === 'idle' ? 'Show Results (R)' : 'Show Welcome (R)'}
-              </span>
             </div>
           </button>
         </header>
