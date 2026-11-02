@@ -244,13 +244,6 @@ export default function BigScreen() {
                     }`}
                   />
                 </div>
-
-                {/* Subtle indicator when QR is hidden */}
-                {!showHeroQr && (
-                  <span className="mt-[clamp(10px,1.8vh,24px)] px-4 py-1 rounded-full bg-ksu-cyan/15 border border-ksu-cyan/40 text-ksu-cyan font-arabic text-[clamp(11px,1.4vh,15px)] font-bold tracking-wide shadow-[0_0_15px_rgba(0,242,254,0.25)] animate-pulse">
-                    انقر لإظهار كود التصويت QR
-                  </span>
-                )}
               </div>
 
               {/* Large Hero QR Code Card directly underneath: Click to hide */}
