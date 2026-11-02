@@ -145,9 +145,10 @@ export default function BigScreen() {
 
         {/* =========================================================================
             HEADER LAYER: Swapped Logos - KSU Logo (Top-Left) & Meeting Logo (Top-Right)
+            Enlarged & calibrated for high-resolution 3072x1536 LED stage displays
            ========================================================================= */}
-        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-[clamp(16px,3.5vw,64px)] pt-[clamp(14px,2.5vh,40px)] pointer-events-none">
-          {/* Top-Left: King Saud University Logo including Arabic sub-lines */}
+        <header className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between px-[clamp(20px,3.8vw,110px)] pt-[clamp(16px,2.8vh,48px)] pointer-events-none">
+          {/* Top-Left: King Saud University Logo including Arabic sub-lines (Enlarged for stage) */}
           <button
             onClick={() => navigate('/admin')}
             title="انقر لفتح لوحة التحكم (/admin)"
@@ -157,38 +158,38 @@ export default function BigScreen() {
               <img
                 src="/assets/logos/ksu-logo-full-with-arabic-lines.png"
                 alt="King Saud University"
-                className="h-[clamp(38px,6.5vh,88px)] w-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
+                className="h-[clamp(52px,10.5vh,175px)] w-auto object-contain drop-shadow-[0_6px_20px_rgba(0,0,0,0.45)]"
               />
-              <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-amber-400/40 whitespace-nowrap shadow-lg">
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-xs font-condensed tracking-wider uppercase text-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2.5 py-0.5 rounded-full border border-amber-400/40 whitespace-nowrap shadow-lg">
                 Admin Panel (A)
               </span>
             </div>
           </button>
 
-          {/* Top-Right: 6th Annual KSUMC Pharmacy Meeting Cube Logo (Fully Responsive & Unclipped) */}
+          {/* Top-Right: 6th Annual KSUMC Pharmacy Meeting Cube Logo (Enlarged & Prominent for stage) */}
           <button
             onClick={toggleMode}
             title="انقر للتبديل بين الشاشة الترحيبية والنتائج (R)"
             dir="ltr"
             className="pointer-events-auto flex items-center group focus:outline-none transition-transform duration-300 hover:scale-105 active:scale-95 animate-logo-intro [animation-delay:150ms]"
           >
-            <div className="relative flex items-center gap-2.5 sm:gap-3.5">
+            <div className="relative flex items-center gap-3 sm:gap-4 md:gap-5">
               <img
                 src="/assets/svg/cube-logo-only.svg"
                 alt="KSUMC Cube"
-                className="h-[clamp(36px,6.2vh,84px)] w-auto object-contain drop-shadow-[0_4px_14px_rgba(0,242,254,0.35)] shrink-0"
+                className="h-[clamp(48px,10vh,165px)] w-auto object-contain drop-shadow-[0_6px_22px_rgba(0,242,254,0.4)] shrink-0"
               />
               <div className="flex flex-col text-left leading-none select-none">
-                <span className="font-condensed font-semibold text-[clamp(11px,1.65vh,22px)] tracking-[0.14em] text-white/95 uppercase whitespace-nowrap mb-1">
+                <span className="font-condensed font-semibold text-[clamp(13px,2.4vh,38px)] tracking-[0.14em] text-white/95 uppercase whitespace-nowrap mb-1 md:mb-1.5">
                   6TH ANNUAL KSUMC
                 </span>
-                <span className="font-condensed font-extrabold text-[clamp(13px,2.1vh,28px)] tracking-[0.07em] text-white uppercase whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                <span className="font-condensed font-extrabold text-[clamp(16px,3.2vh,50px)] tracking-[0.07em] text-white uppercase whitespace-nowrap drop-shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
                   PHARMACY MEETING
                 </span>
               </div>
 
               {/* Subtle hover pulse indicator */}
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-condensed tracking-wider uppercase text-ksu-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2 py-0.5 rounded-full border border-ksu-cyan/30 whitespace-nowrap shadow-lg">
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-xs font-condensed tracking-wider uppercase text-ksu-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-[#0d2745]/90 px-2.5 py-0.5 rounded-full border border-ksu-cyan/30 whitespace-nowrap shadow-lg">
                 {screenMode === 'idle' ? 'Show Results (R)' : 'Show Welcome (R)'}
               </span>
             </div>
@@ -309,7 +310,7 @@ export default function BigScreen() {
             BOTTOM LAYER: Live Counter (Right) & Corner QR Code (Left in Results Mode)
             Clickable: Clicking either element (or pressing H) toggles visibility
            ========================================================================= */}
-        <footer className="absolute bottom-0 left-0 right-0 z-30 flex items-end justify-between px-[clamp(16px,3.5vw,64px)] pb-[clamp(14px,2.5vh,40px)] pointer-events-none">
+        <footer className="absolute bottom-0 left-0 right-0 z-30 flex items-end justify-between px-[clamp(20px,3.8vw,110px)] pb-[clamp(16px,2.8vh,48px)] pointer-events-none">
           {/* Bottom-Right (in RTL): Live Total Votes Counter */}
           <div
             onClick={toggleBottomBar}

@@ -295,7 +295,7 @@
   grid-column: 1 / -1;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: clamp(10px, min(1vw, 1.4vh), 15px);
+  font-size: clamp(11px, min(1.2vw, 1.8vh), 22px);
   line-height: 1;
   letter-spacing: 0.22em;
   color: #00f2fe;
@@ -307,7 +307,7 @@
 .screen-total strong {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 300;
-  font-size: clamp(32px, min(5vw, 6.8vh), 86px);
+  font-size: clamp(34px, min(5.5vw, 8.5vh), 118px);
   line-height: 0.88;
   letter-spacing: 0.01em;
   color: #ffffff;
@@ -317,7 +317,7 @@
 .screen-total small {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 500;
-  font-size: clamp(10px, min(0.9vw, 1.3vh), 14px);
+  font-size: clamp(11px, min(1.1vw, 1.6vh), 20px);
   line-height: 1;
   letter-spacing: 0.16em;
   color: #9fc1c9;
