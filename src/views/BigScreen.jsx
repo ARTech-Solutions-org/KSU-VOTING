@@ -15,6 +15,7 @@ export default function BigScreen() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cursorHidden, setCursorHidden] = useState(false);
   const [showBottomBar, setShowBottomBar] = useState(true);
+  const [showHeroQr, setShowHeroQr] = useState(true);
   const cursorTimerRef = useRef(null);
   const stageRef = useRef(null);
 
@@ -65,6 +66,8 @@ export default function BigScreen() {
         navigate('/admin');
       } else if (e.key === 'h' || e.key === 'H') {
         toggleBottomBar();
+      } else if (e.key === 'q' || e.key === 'Q') {
+        setShowHeroQr((prev) => !prev);
       }
     };
 
@@ -199,12 +202,20 @@ export default function BigScreen() {
           {/* VIEW A: IDLE (ATTRACT) MODE */}
           {screenMode === 'idle' && (
             <div
-              className={`flex flex-col items-center justify-center text-center -translate-y-[clamp(14px,2.6vh,44px)] transition-all duration-700 ease-out transform ${
+              className={`flex flex-col items-center justify-center text-center transition-all duration-700 ease-out transform ${
                 isTransitioning ? 'scale-90 opacity-0 -translate-y-12' : 'scale-100 opacity-100'
               }`}
             >
-              {/* Text Group: Shifted Upwards */}
-              <div className="flex flex-col items-center justify-center">
+              {/* Text Group: Clicking toggles QR code. Slides smoothly between Center and Up */}
+              <div
+                onClick={() => setShowHeroQr((prev) => !prev)}
+                title={showHeroQr ? 'انقر على النص لإخفاء كود الـ QR (Q)' : 'انقر على النص لإظهار كود الـ QR (Q)'}
+                className={`flex flex-col items-center justify-center cursor-pointer pointer-events-auto select-none transition-all duration-700 ease-out transform ${
+                  showHeroQr
+                    ? '-translate-y-[clamp(14px,2.8vh,48px)] hover:scale-[1.01]'
+                    : 'translate-y-0 hover:scale-[1.02]'
+                }`}
+              >
                 {/* Cyan Eyebrow: AI INNOVATION COMPETITION */}
                 <div className="relative mb-[clamp(4px,0.7vh,10px)]">
                   <img
@@ -228,14 +239,33 @@ export default function BigScreen() {
                   <img
                     src="/assets/text/title-arabic-white.png"
                     alt="ذكاء يُبتكر"
-                    className="h-[clamp(70px,13.5vh,185px)] w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-transform duration-700 group-hover:scale-[1.02] animate-title-reveal"
+                    className={`w-auto object-contain drop-shadow-[0_10px_35px_rgba(0,0,0,0.6)] transition-all duration-700 group-hover:scale-[1.02] animate-title-reveal ${
+                      showHeroQr ? 'h-[clamp(70px,13vh,180px)]' : 'h-[clamp(85px,17vh,230px)]'
+                    }`}
                   />
                 </div>
+
+                {/* Subtle indicator when QR is hidden */}
+                {!showHeroQr && (
+                  <span className="mt-[clamp(10px,1.8vh,24px)] px-4 py-1 rounded-full bg-ksu-cyan/15 border border-ksu-cyan/40 text-ksu-cyan font-arabic text-[clamp(11px,1.4vh,15px)] font-bold tracking-wide shadow-[0_0_15px_rgba(0,242,254,0.25)] animate-pulse">
+                    انقر لإظهار كود التصويت QR
+                  </span>
+                )}
               </div>
 
-              {/* Large Hero QR Code Card directly underneath */}
-              <div className="mt-[clamp(12px,2.2vh,34px)] pointer-events-auto animate-card-intro">
-                <QRCodeCard url={state.settings?.votingUrl} variant="hero" />
+              {/* Large Hero QR Code Card directly underneath: Click to hide */}
+              <div
+                className={`transition-all duration-700 ease-out transform ${
+                  showHeroQr
+                    ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto mt-[clamp(10px,2vh,30px)] animate-card-intro'
+                    : 'opacity-0 scale-75 -translate-y-8 pointer-events-none h-0 mt-0 overflow-hidden'
+                }`}
+              >
+                <QRCodeCard
+                  url={state.settings?.votingUrl}
+                  variant="hero"
+                  onClick={() => setShowHeroQr(false)}
+                />
               </div>
             </div>
           )}
