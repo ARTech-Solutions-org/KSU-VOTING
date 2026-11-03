@@ -243,25 +243,28 @@ export default function MobileVote() {
                   return (
                     <button
                       key={opt.id}
+                      dir="rtl"
                       onClick={() => handleSelectOption(opt.id)}
-                      className={`relative w-full p-4 rounded-2xl border text-right transition-all duration-200 flex items-center justify-between gap-3 text-start active:scale-[0.98] ${
+                      className={`relative w-full p-4 rounded-2xl border text-right transition-all duration-200 flex items-center justify-between gap-3 active:scale-[0.98] ${
                         isSelected
                           ? 'bg-gradient-to-r from-ksu-green/40 to-ksu-teal/40 border-ksu-cyan shadow-[0_0_25px_rgba(0,242,254,0.3)] ring-2 ring-ksu-cyan/60'
                           : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                       }`}
                     >
-                      {/* Text Section */}
-                      <div className="flex-1 min-w-0">
+                      {/* Text Section - Right-aligned whether Arabic or English */}
+                      <div className="flex-1 min-w-0 text-right" style={{ textAlign: 'right' }}>
                         <bdi
                           dir={titleDir}
-                          className="font-arabic font-extrabold text-base text-white block leading-snug truncate"
+                          className="font-arabic font-extrabold text-base text-white block leading-snug truncate text-right w-full"
+                          style={{ textAlign: 'right' }}
                         >
                           {title}
                         </bdi>
                         {hasSubtitle && (
                           <bdi
                             dir={subtitleDir}
-                            className="font-arabic font-medium text-xs text-cyan-200/90 block mt-1 leading-normal"
+                            className="font-arabic font-medium text-xs text-cyan-200/90 block mt-1 leading-normal text-right w-full"
+                            style={{ textAlign: 'right' }}
                           >
                             {subtitle}
                           </bdi>
