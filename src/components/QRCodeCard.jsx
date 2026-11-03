@@ -26,7 +26,7 @@ export default function QRCodeCard({ url, variant = 'corner', onClick }) {
   useEffect(() => {
     let isMounted = true;
     QRCode.toDataURL(effectiveUrl, {
-      width: isHero ? 768 : isHeader ? 512 : 240,
+      width: isHero || isHeader ? 768 : 240,
       margin: isHero ? 2 : 1,
       color: {
         dark: '#0a233f',
@@ -47,7 +47,7 @@ export default function QRCodeCard({ url, variant = 'corner', onClick }) {
   }, [effectiveUrl, isHero, isHeader]);
 
   // Header Display: Positioned next to the title in Results mode
-  // Clean, enlarged, without any text underneath
+  // Clean, extra-large, without any text underneath
   if (isHeader) {
     return (
       <div
@@ -56,21 +56,21 @@ export default function QRCodeCard({ url, variant = 'corner', onClick }) {
         title="كود التصويت المباشر"
       >
         {/* Outer ambient glow */}
-        <div className="absolute -inset-1.5 bg-gradient-to-r from-ksu-green/50 via-ksu-cyan/60 to-emerald-400/40 rounded-3xl blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse-slow" />
+        <div className="absolute -inset-2 bg-gradient-to-r from-ksu-green/50 via-ksu-cyan/60 to-emerald-400/40 rounded-3xl blur-xl opacity-45 group-hover:opacity-75 transition-opacity duration-500 animate-pulse-slow" />
 
-        {/* Card Frame - Clean and enlarged without bottom text */}
-        <div className="relative flex flex-col items-center bg-[#09223c]/90 backdrop-blur-xl border border-ksu-cyan/40 rounded-2xl md:rounded-3xl p-[clamp(6px,0.9vh,12px)] shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 group-hover:scale-[1.03] group-hover:border-ksu-cyan">
+        {/* Card Frame - Extra Large without bottom text */}
+        <div className="relative flex flex-col items-center bg-[#09223c]/90 backdrop-blur-xl border border-ksu-cyan/40 rounded-2xl md:rounded-3xl p-[clamp(8px,1.2vh,16px)] shadow-[0_16px_48px_rgba(0,0,0,0.65)] transition-all duration-300 group-hover:scale-[1.03] group-hover:border-ksu-cyan">
           {/* QR Code Container with crisp white backing */}
-          <div className="relative p-[clamp(5px,0.8vh,10px)] bg-white rounded-xl md:rounded-2xl shadow-inner overflow-hidden flex items-center justify-center">
+          <div className="relative p-[clamp(6px,1vh,12px)] bg-white rounded-xl md:rounded-2xl shadow-inner overflow-hidden flex items-center justify-center">
             {qrDataUrl ? (
               <img
                 src={qrDataUrl}
                 alt="Scan to vote"
-                className="w-[clamp(90px,13vh,160px)] h-[clamp(90px,13vh,160px)] object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
+                className="w-[clamp(120px,18vh,220px)] h-[clamp(120px,18vh,220px)] object-contain rounded-lg md:rounded-xl transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <div className="w-[clamp(90px,13vh,160px)] h-[clamp(90px,13vh,160px)] flex items-center justify-center bg-slate-100 text-slate-400">
-                <QrIcon className="w-10 h-10 animate-pulse text-ksu-cyan" />
+              <div className="w-[clamp(120px,18vh,220px)] h-[clamp(120px,18vh,220px)] flex items-center justify-center bg-slate-100 text-slate-400">
+                <QrIcon className="w-12 h-12 animate-pulse text-ksu-cyan" />
               </div>
             )}
           </div>

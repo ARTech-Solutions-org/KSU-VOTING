@@ -263,35 +263,31 @@ export default function BigScreen() {
                 isTransitioning ? 'scale-90 opacity-0 translate-y-8' : 'scale-100 opacity-100 translate-y-0'
               }`}
             >
-              {/* Results Header with QR Code side-by-side - Clean, enlarged, without bottom text */}
-              <div className="flex items-center justify-center gap-[clamp(20px,3vw,56px)] mb-[clamp(18px,3vh,44px)] animate-results-rise pointer-events-auto">
-                {/* Title & Stats Block */}
-                <div className="flex flex-col items-center sm:items-start text-center sm:text-right">
+              {/* Results Header with QR Code on the Right side - Extra Large & Clean */}
+              <div className="flex items-center justify-center gap-[clamp(20px,3.2vw,56px)] mb-[clamp(18px,3vh,44px)] animate-results-rise pointer-events-auto">
+                {/* 1. QR Code on the Right - Extra Large, clean, no text underneath */}
+                <div className="shrink-0 flex items-center justify-center">
+                  <QRCodeCard
+                    url={state.settings?.votingUrl}
+                    variant="header"
+                  />
+                </div>
+
+                {/* 2. Title Block on the Left of QR - Without total votes number */}
+                <div className="flex flex-col items-start text-right">
                   <div className="flex items-center gap-2.5 text-ksu-cyan font-condensed tracking-wider uppercase text-[clamp(12px,1.8vh,24px)] font-extrabold text-glow-cyan">
                     <BarChart3 className="w-[clamp(16px,2.2vh,30px)] h-[clamp(16px,2.2vh,30px)]" />
                     <span>AI Innovation Competition - Live Results</span>
                   </div>
-                  <h2 className="font-arabic font-black text-[clamp(24px,4.2vh,58px)] text-white tracking-wide text-glow-white mt-1">
+                  <h2 className="font-arabic font-black text-[clamp(26px,4.5vh,62px)] text-white tracking-wide text-glow-white mt-1">
                     نتائج التصويت المباشر
                   </h2>
-                  <div className="results-total mt-1 sm:mt-2 flex items-baseline gap-2.5">
-                    <span className="text-[clamp(12px,1.6vh,22px)]">Total votes</span>
-                    <strong className="text-[clamp(22px,3.2vh,46px)]">{new Intl.NumberFormat('en-US').format(state.stats?.totalVotes || 0)}</strong>
-                  </div>
                   {state.settings?.revealMode && (
                     <div className="mt-2 px-4 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 font-arabic text-[clamp(11px,1.5vh,18px)] font-bold">
                       وضع الكشف التدريجي (المرحلة {state.settings?.revealedCount || 0} من{' '}
                       {state.options?.length || 0})
                     </div>
                   )}
-                </div>
-
-                {/* QR Code next to Title - Clean, enlarged, no text underneath */}
-                <div className="shrink-0 flex items-center justify-center">
-                  <QRCodeCard
-                    url={state.settings?.votingUrl}
-                    variant="header"
-                  />
                 </div>
               </div>
 
