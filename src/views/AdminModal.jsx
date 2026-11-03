@@ -443,19 +443,27 @@ export default function AdminModal({ onClose }) {
                           </div>
 
                           {/* Info */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <bdi dir={titleDir} className="font-arabic font-bold text-sm text-white truncate">
-                                {title}
-                              </bdi>
+                          <div className="flex-1 min-w-0 text-right" style={{ textAlign: 'right' }}>
+                            <div className="flex items-center gap-2 justify-end">
                               {!opt.enabled && (
                                 <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 font-arabic text-[10px]">
                                   معطّل
                                 </span>
                               )}
+                              <bdi
+                                dir={titleDir}
+                                className="font-arabic font-bold text-sm text-white truncate text-right block"
+                                style={{ textAlign: 'right' }}
+                              >
+                                {title}
+                              </bdi>
                             </div>
                             {hasSubtitle && (
-                              <bdi dir={subtitleDir} className="font-arabic text-xs text-ksu-cyan block mt-0.5 truncate">
+                              <bdi
+                                dir={subtitleDir}
+                                className="font-arabic text-xs text-ksu-cyan block mt-0.5 truncate text-right w-full"
+                                style={{ textAlign: 'right' }}
+                              >
                                 {subtitle}
                               </bdi>
                             )}

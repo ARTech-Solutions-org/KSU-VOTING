@@ -120,35 +120,40 @@ export default function ResultsBars({
                   )}
                 </div>
 
-                {/* Option Name with 2-line bilingual support */}
-                <div className="flex flex-col min-w-0 flex-1 justify-center leading-tight">
+                {/* Option Name with 2-line bilingual support - Strictly right-aligned */}
+                <div
+                  className="flex flex-col min-w-0 flex-1 justify-center leading-tight text-right"
+                  style={{ textAlign: 'right' }}
+                >
                   {isRevealed ? (
                     <>
                       <bdi
                         dir={titleDir}
-                        className={`font-arabic truncate text-white ${
+                        className={`font-arabic truncate text-white block text-right w-full ${
                           isFirst
                             ? 'font-black text-[clamp(15px,2.4vh,34px)] text-glow-white'
                             : 'font-extrabold text-[clamp(14px,2.1vh,30px)]'
                         }`}
+                        style={{ textAlign: 'right' }}
                       >
                         {title}
                       </bdi>
                       {hasSubtitle && (
                         <bdi
                           dir={subtitleDir}
-                          className="font-arabic font-medium text-[clamp(11px,1.5vh,22px)] text-cyan-200/90 truncate mt-0.5 sm:mt-1"
+                          className="font-arabic font-medium text-[clamp(11px,1.5vh,22px)] text-cyan-200/90 truncate mt-0.5 sm:mt-1 block text-right w-full"
+                          style={{ textAlign: 'right' }}
                         >
                           {subtitle}
                         </bdi>
                       )}
                     </>
                   ) : (
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <Sparkles className="w-4 h-4 animate-spin text-ksu-cyan" />
+                    <div className="flex items-center gap-2 text-slate-400 justify-end text-right">
                       <span className="font-arabic font-bold text-[clamp(13px,1.8vh,24px)] tracking-widest">
                         قيد الكشف...
                       </span>
+                      <Sparkles className="w-4 h-4 animate-spin text-ksu-cyan" />
                     </div>
                   )}
                 </div>
