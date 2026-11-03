@@ -21,17 +21,18 @@ export default function QRCodeCard({ url, variant = 'corner', onClick }) {
   })();
 
   const isHero = variant === 'hero';
+  const isHeader = variant === 'header';
 
   useEffect(() => {
     let isMounted = true;
     QRCode.toDataURL(effectiveUrl, {
-      width: isHero ? 768 : 240,
+      width: isHero ? 768 : isHeader ? 512 : 240,
       margin: isHero ? 2 : 1,
       color: {
         dark: '#0a233f',
         light: '#ffffff',
       },
-      errorCorrectionLevel: isHero ? 'Q' : 'M',
+      errorCorrectionLevel: isHero || isHeader ? 'Q' : 'M',
     })
       .then((dataUri) => {
         if (isMounted) setQrDataUrl(dataUri);
@@ -43,7 +44,40 @@ export default function QRCodeCard({ url, variant = 'corner', onClick }) {
     return () => {
       isMounted = false;
     };
-  }, [effectiveUrl, isHero]);
+  }, [effectiveUrl, isHero, isHeader]);
+
+  // Header Display: Positioned next to the title in Results mode
+  // Clean, enlarged, without any text underneath
+  if (isHeader) {
+    return (
+      <div
+        className="relative group select-none cursor-pointer"
+        onClick={onClick}
+        title="كود التصويت المباشر"
+      >
+        {/* Outer ambient glow */}
+        <div className="absolute -inset-1.5 bg-gradient-to-r from-ksu-green/50 via-ksu-cyan/60 to-emerald-400/40 rounded-3xl blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-500 animate-pulse-slow" />
+
+        {/* Card Frame - Clean and enlarged without bottom text */}
+        <div className="relative flex flex-col items-center bg-[#09223c]/90 backdrop-blur-xl border border-ksu-cyan/40 rounded-2xl md:rounded-3xl p-[clamp(6px,0.9vh,12px)] shadow-[0_12px_36px_rgba(0,0,0,0.6)] transition-all duration-300 group-hover:scale-[1.03] group-hover:border-ksu-cyan">
+          {/* QR Code Container with crisp white backing */}
+          <div className="relative p-[clamp(5px,0.8vh,10px)] bg-white rounded-xl md:rounded-2xl shadow-inner overflow-hidden flex items-center justify-center">
+            {qrDataUrl ? (
+              <img
+                src={qrDataUrl}
+                alt="Scan to vote"
+                className="w-[clamp(90px,13vh,160px)] h-[clamp(90px,13vh,160px)] object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <div className="w-[clamp(90px,13vh,160px)] h-[clamp(90px,13vh,160px)] flex items-center justify-center bg-slate-100 text-slate-400">
+                <QrIcon className="w-10 h-10 animate-pulse text-ksu-cyan" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Hero Display: Centered under Idle Mode text on Big Screen (calibrated for 3072x1536 LED walls)
   // Clean, extra-large, without labels, click to hide
