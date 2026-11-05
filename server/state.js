@@ -416,7 +416,7 @@ class StateManager {
     return opt;
   }
 
-  resetAllVotes(adminIp) {
+  async resetAllVotes(adminIp) {
     this.options.forEach((opt) => {
       opt.votes = 0;
     });
@@ -427,7 +427,14 @@ class StateManager {
     this.saveFallback();
 
     if (this.isDbConnected) {
-      dbResetAll(INITIAL_OPTIONS).catch((err) => console.error('DB resetAll error:', err.message));
+      try {
+        // Pass current options (preserving any additions/edits) with votes zeroed
+        await dbResetAll(this.options);
+        // Also persist the updated settings (revealedCount=0)
+        await dbSaveSettings(this.settings).catch(() => {});
+      } catch (err) {
+        console.error('DB resetAll error:', err.message);
+      }
     }
   }
 

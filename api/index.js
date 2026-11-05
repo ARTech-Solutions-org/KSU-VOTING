@@ -115,7 +115,7 @@ router.post('/admin/verify', (req, res) => {
 });
 
 // POST /api/admin/action or /admin/action
-router.post('/admin/action', (req, res) => {
+router.post('/admin/action', async (req, res) => {
   const { action, payload = {}, pin } = req.body || {};
   if (!verifyPin(pin)) {
     return res.status(401).json({ success: false, error: 'غير مصرح - رمز الدخول غير صحيح' });
@@ -164,7 +164,7 @@ router.post('/admin/action', (req, res) => {
         break;
       case 'resetAll':
       case 'admin:resetAll':
-        stateManager.resetAllVotes(clientIp);
+        await stateManager.resetAllVotes(clientIp);
         break;
       case 'resetOption':
       case 'admin:resetOption':

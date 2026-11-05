@@ -118,7 +118,7 @@ app.post('/api/admin/verify', (req, res) => {
   res.json({ success: valid, error: valid ? null : 'رمز الدخول غير صحيح' });
 });
 
-app.post('/api/admin/action', (req, res) => {
+app.post('/api/admin/action', async (req, res) => {
   const { action, payload = {}, pin } = req.body || {};
   const expectedPin = process.env.ADMIN_PIN || stateManager.settings.adminPin || '2026';
   if (String(pin).trim() !== String(expectedPin).trim()) {
@@ -163,7 +163,7 @@ app.post('/api/admin/action', (req, res) => {
         break;
       case 'resetAll':
       case 'admin:resetAll':
-        stateManager.resetAllVotes(clientIp);
+        await stateManager.resetAllVotes(clientIp);
         break;
       case 'resetOption':
       case 'admin:resetOption':
@@ -354,9 +354,9 @@ io.on('connection', (socket) => {
     if (typeof ack === 'function') ack({ success: true });
   });
 
-  socket.on('admin:resetAll', ({ pin }, ack) => {
+  socket.on('admin:resetAll', async ({ pin }, ack) => {
     if (!verifyPin(pin)) return;
-    stateManager.resetAllVotes(clientIp);
+    await stateManager.resetAllVotes(clientIp);
     io.emit('state:update', stateManager.getPublicState());
     if (typeof ack === 'function') ack({ success: true });
   });
