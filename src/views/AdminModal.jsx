@@ -49,7 +49,6 @@ export default function AdminModal({ onClose }) {
 
   // Double Confirmation Modal for Reset All
   const [showResetConfirm, setShowResetConfirm] = useState(false);
-  const [resetConfirmText, setResetConfirmText] = useState('');
 
   // Handle PIN Login (supports both Socket and REST fallback for Vercel)
   const handleLogin = async (e) => {
@@ -1037,47 +1036,32 @@ export default function AdminModal({ onClose }) {
         </div>
       )}
 
-      {/* Double Confirmation Modal for Reset All */}
+      {/* Confirmation Modal for Reset All */}
       {showResetConfirm && (
         <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/90">
-          <div className="w-full max-w-md rounded-3xl bg-red-950/90 border border-red-500/50 p-6 text-center shadow-2xl">
+          <div className="w-full max-w-sm rounded-3xl bg-red-950/90 border border-red-500/50 p-6 text-center shadow-2xl">
             <h3 className="font-arabic font-black text-xl text-red-300 mb-2">
-              تأكيد تصفير كافة الأصوات
+              تصفير كافة الأصوات
             </h3>
-            <p className="font-arabic text-xs text-slate-200 mb-4 leading-relaxed">
-              هذا الإجراء سيمسح جميع أصوات الحضور وسيعيد النتائج إلى الصفر تماماً. لا يمكن التراجع عن هذا الإجراء!
+            <p className="font-arabic text-sm text-slate-200 mb-6 leading-relaxed">
+              سيتم مسح جميع الأصوات وإعادة النتائج إلى الصفر. هل أنت متأكد؟
             </p>
-            <p className="font-arabic text-xs text-red-300 mb-2 font-bold">
-              لتأكيد الحذف، اكتب كلمة <span className="underline">RESET</span> أدناه:
-            </p>
-            <input
-              type="text"
-              value={resetConfirmText}
-              onChange={(e) => setResetConfirmText(e.target.value)}
-              placeholder="RESET"
-              className="w-full text-center py-2 px-3 rounded-xl bg-black/40 border border-red-400 text-white font-mono text-base mb-5"
-            />
 
             <div className="flex gap-2">
               <button
-                onClick={() => {
-                  setShowResetConfirm(false);
-                  setResetConfirmText('');
-                }}
-                className="flex-1 py-2.5 rounded-xl bg-white/10 text-white font-arabic font-bold text-xs"
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-arabic font-bold text-sm transition"
               >
                 إلغاء
               </button>
               <button
-                disabled={resetConfirmText !== 'RESET'}
                 onClick={() => {
                   emitAdmin('admin:resetAll');
                   setShowResetConfirm(false);
-                  setResetConfirmText('');
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-arabic font-black text-xs shadow-lg disabled:opacity-30"
+                className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-arabic font-black text-sm shadow-lg transition"
               >
-                تأكيد التصفير النهائي
+                تصفير الآن
               </button>
             </div>
           </div>
